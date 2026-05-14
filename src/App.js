@@ -36,6 +36,7 @@ import Users from './pages/Admin/Users';
 import Dispatch from './pages/Admin/Dispatch';
 import CourierSettings from './pages/Admin/CourierSettings';
 import APILogs from './pages/Admin/APILogs';
+import ShippingRates from './pages/Admin/ShippingRates';
 import Analytics from './pages/Admin/Analytics';
 import MakeAdmin from './components/admin/MakeAdmin';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
@@ -135,6 +136,7 @@ function App() {
                   <Route path="categories" element={<Categories />} />
                   <Route path="users" element={<Users />} />
                   <Route path="courier-settings" element={<CourierSettings />} />
+                  <Route path="shipping-rates" element={<ShippingRates />} />
                   <Route path="api-logs" element={<APILogs />} />
                   
                   {/* Analytics Routes */}

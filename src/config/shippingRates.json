@@ -1,0 +1,76 @@
+{
+  "zones": {
+    "KOLHAPUR_SANGLI": {
+      "up_to_500gm": 25,
+      "501gm_1kg": 20,
+      "1.1kg_2kg": 40,
+      "2.1kg_3kg": 70,
+      "above_3kg_per_kg": 20,
+      "for_10kg": 180,
+      "above_10kg_per_kg": 20
+    },
+    "MAHARASTRA_ZONE_A": {
+      "up_to_500gm": 40,
+      "501gm_1kg": 45,
+      "1.1kg_2kg": 50,
+      "2.1kg_3kg": 80,
+      "above_3kg_per_kg": 20,
+      "for_10kg": 220,
+      "above_10kg_per_kg": 20
+    },
+    "KARNATAKA_ZONE_B": {
+      "up_to_500gm": 40,
+      "501gm_1kg": 50,
+      "1.1kg_2kg": 70,
+      "2.1kg_3kg": 120,
+      "above_3kg_per_kg": 30,
+      "for_10kg": 330,
+      "above_10kg_per_kg": 30
+    },
+    "HYDERABAD_KERALA_CHENNAI_ZONE_C": {
+      "up_to_500gm": 60,
+      "501gm_1kg": 70,
+      "1.1kg_2kg": 130,
+      "2.1kg_3kg": 180,
+      "above_3kg_per_kg": 45,
+      "for_10kg": 550,
+      "above_10kg_per_kg": 45
+    },
+    "GUJ_ZONE_D": {
+      "up_to_500gm": 50,
+      "501gm_1kg": 60,
+      "1.1kg_2kg": 100,
+      "2.1kg_3kg": 135,
+      "above_3kg_per_kg": 40,
+      "for_10kg": 400,
+      "above_10kg_per_kg": 38
+    },
+    "DELHI_ZONE_E": {
+      "up_to_500gm": 70,
+      "501gm_1kg": 80,
+      "1.1kg_2kg": 150,
+      "2.1kg_3kg": 180,
+      "above_3kg_per_kg": 55,
+      "for_10kg": 550,
+      "above_10kg_per_kg": 50
+    },
+    "MP_UP_CHAT_HAR_PUNG_RAJ_ZONE_F": {
+      "up_to_500gm": 75,
+      "501gm_1kg": 80,
+      "1.1kg_2kg": 160,
+      "2.1kg_3kg": 225,
+      "above_3kg_per_kg": 65,
+      "for_10kg": 650,
+      "above_10kg_per_kg": 50
+    },
+    "WB_ASSAM_ODISA_MANIPUR_JK_ANP_SPE_ZONE": {
+      "up_to_500gm": 80,
+      "501gm_1kg": 90,
+      "1.1kg_2kg": 165,
+      "2.1kg_3kg": 250,
+      "above_3kg_per_kg": 65,
+      "for_10kg": 680,
+      "above_10kg_per_kg": 55
+    }
+  }
+}

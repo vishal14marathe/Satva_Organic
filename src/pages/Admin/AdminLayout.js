@@ -86,6 +86,7 @@ const AdminLayout = () => {
     { path: '/admin/categories', icon: <FiList />, label: 'Categories' },
     { path: '/admin/users', icon: <FiUsers />, label: 'Total Customers' },
     { path: '/admin/courier-settings', icon: <FiSettings />, label: 'Courier Settings' },
+    { path: '/admin/shipping-rates', icon: <FiTruck />, label: 'Shipping Rates' },
     { path: '/admin/api-logs', icon: <FiActivity />, label: 'API Logs' },
   ];
 
@@ -170,6 +171,7 @@ const AdminLayout = () => {
           <div className="topbar-actions">
             <div className="notification-wrapper" style={{ position: 'relative' }}>
               <button 
+                type="button"
                 className={`notification-btn ${notifications.length > 0 ? 'has-notifications' : ''}`}
                 onClick={() => setShowNotifications(!showNotifications)}
                 title="View Notifications"

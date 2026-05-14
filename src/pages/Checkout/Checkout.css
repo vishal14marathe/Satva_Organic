@@ -982,11 +982,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    z-index: 10000;
+    z-index: 99999;
     padding: 20px;
 }
 
@@ -999,6 +999,7 @@
     width: 100%;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     animation: modalSlideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-top: 100px;
 }
 
 @keyframes modalSlideUp {
@@ -1016,8 +1017,8 @@
 .celebration-icon {
     width: 64px;
     height: 64px;
-    background: #f0fdf4;
-    color: #27ae60;
+    background: #27ae60;
+    color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;

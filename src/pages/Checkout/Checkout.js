@@ -8,6 +8,7 @@ import config from '../../config';
 import { FiCheck, FiShield, FiEdit2, FiPlus, FiTruck, FiChevronLeft, FiCheckCircle, FiChevronDown, FiChevronUp, FiLock } from 'react-icons/fi';
 import { BsShieldCheck, BsTruck, BsArrowRepeat } from 'react-icons/bs';
 import './Checkout.css';
+import defaultRates from '../../config/shippingRates.json';
 
 const Checkout = () => {
   const { currentUser, login, signup } = useAuth();
@@ -55,20 +56,88 @@ const Checkout = () => {
   const [showPriceBreakdown, setShowPriceBreakdown] = useState(false);
   const [showShippingDetails, setShowShippingDetails] = useState(false);
 
-  // Calculate grand total (same as CartDrawer)
-  const itemTotal = cartTotal || 0;
-  const freeAbove = shippingConfig?.freeShippingAbove !== undefined ? shippingConfig.freeShippingAbove : 500;
-  const shipCharge = shippingConfig?.shippingCharge !== undefined ? shippingConfig.shippingCharge : 50;
-  const deliveryCharge = (itemTotal >= freeAbove || itemTotal === 0) ? 0 : parseFloat(shipCharge);
+  const [address, setAddress] = useState({
+    name: '',
+    phone: '',
+    pincode: '',
+    locality: '',
+    address: '',
+    city: '',
+    state: '',
+    addressType: 'Home',
+    alternatePhone: ''
+  });
+
+  // Calculate total weight in grams
+  const calculateTotalWeight = (items) => {
+    let totalWeightGrams = 0;
+    (items || []).forEach(item => {
+      const sizeStr = item.selectedSize || '';
+      const quantity = item.quantity || 1;
+      
+      let weightInGrams = 0;
+      if (sizeStr.toLowerCase().includes('kg')) {
+        weightInGrams = parseFloat(sizeStr) * 1000;
+      } else if (sizeStr.toLowerCase().includes('gm') || sizeStr.toLowerCase().includes('g')) {
+        weightInGrams = parseFloat(sizeStr);
+      }
+      
+      totalWeightGrams += weightInGrams * quantity;
+    });
+    return totalWeightGrams;
+  };
+
+  const totalWeight = calculateTotalWeight(cartItems);
+
+  // Map state/city to zone
+  const getZone = (state, city) => {
+    const s = state || '';
+    const c = city || '';
+    
+    if (c.toLowerCase().includes('kolhapur') || c.toLowerCase().includes('sangli')) return 'KOLHAPUR_SANGLI';
+    if (c.toLowerCase().includes('hyderabad') || c.toLowerCase().includes('chennai')) return 'HYDERABAD_KERALA_CHENNAI_ZONE_C';
+    
+    if (s.toLowerCase().includes('maharashtra')) return 'MAHARASTRA_ZONE_A';
+    if (s.toLowerCase().includes('karnataka')) return 'KARNATAKA_ZONE_B';
+    if (s.toLowerCase().includes('kerala') || s.toLowerCase().includes('tamil nadu')) return 'HYDERABAD_KERALA_CHENNAI_ZONE_C';
+    if (s.toLowerCase().includes('gujarat')) return 'GUJ_ZONE_D';
+    if (s.toLowerCase().includes('delhi')) return 'DELHI_ZONE_E';
+    if (s.toLowerCase().includes('madhya pradesh') || s.toLowerCase().includes('uttar pradesh') || s.toLowerCase().includes('haryana') || s.toLowerCase().includes('punjab') || s.toLowerCase().includes('rajasthan')) return 'MP_UP_CHAT_HAR_PUNG_RAJ_ZONE_F';
+    
+    return 'WB_ASSAM_ODISA_MANIPUR_JK_ANP_SPE_ZONE'; // Default fallback
+  };
+
+  const zone = getZone(address.state, address.city);
   
-  const shippingCharge = 0; // Removed shipping charge
-  const smallCartCharge = 0; // Removed small basket charge
-  const roundedGst = 0; // GST already included in price
-  // Gross = base price before 5% GST; GST amount = 5% portion
+  // Calculate rate based on weight and zone
+  const getShippingRate = (weightGrams, zoneKey) => {
+    const zoneRates = defaultRates.zones[zoneKey];
+    if (!zoneRates) return 50; // Fallback
+    
+    if (weightGrams <= 500) return zoneRates.up_to_500gm;
+    if (weightGrams <= 1000) return zoneRates["501gm_1kg"];
+    if (weightGrams <= 2000) return zoneRates["1.1kg_2kg"];
+    if (weightGrams <= 3000) return zoneRates["2.1kg_3kg"];
+    
+    if (weightGrams <= 10000) {
+      const baseRate = zoneRates["2.1kg_3kg"];
+      const extraKg = Math.ceil((weightGrams - 3000) / 1000);
+      return baseRate + (extraKg * zoneRates.above_3kg_per_kg);
+    }
+    
+    const baseRateFor10 = zoneRates.for_10kg;
+    const extraKgAbove10 = Math.ceil((weightGrams - 10000) / 1000);
+    return baseRateFor10 + (extraKgAbove10 * zoneRates.above_10kg_per_kg);
+  };
+
+  const itemTotal = cartTotal || 0;
+  const deliveryCharge = itemTotal === 0 ? 0 : getShippingRate(totalWeight, zone);
+  
   const grossAmount = Math.round(itemTotal / 1.05);
   const gstAmount = itemTotal - grossAmount;
   const codCharge = selectedPaymentMethod === 'cod' ? 15 : 0;
   const grandTotal = itemTotal > 0 ? (itemTotal + deliveryCharge + codCharge) : 0;
+  const roundedGst = 0; // GST already included in price
 
   // Safety check and image cleaning for cartTotal
   const safeCartTotal = grandTotal;
@@ -94,17 +163,7 @@ const Checkout = () => {
     }
   }, [isCodAvailable, selectedPaymentMethod]);
   
-  const [address, setAddress] = useState({
-    name: '',
-    phone: '',
-    pincode: '',
-    locality: '',
-    address: '',
-    city: '',
-    state: '',
-    addressType: 'Home',
-    alternatePhone: ''
-  });
+
 
   const [localities, setLocalities] = useState([]);
   const [loadingPincode, setLoadingPincode] = useState(false);
