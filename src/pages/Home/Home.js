@@ -309,7 +309,8 @@ const Home = () => {
                               style={{
                                 width: '100%',
                                 height: '100%',
-                                objectFit: 'cover'
+                                objectFit: 'cover',
+                                borderRadius: '16px'
                               }}
                               onError={(e) => {
                                 e.target.style.display = 'none';

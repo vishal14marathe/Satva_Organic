@@ -11,6 +11,7 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import { downloadInvoice, viewInvoice } from '../../utils/invoiceGenerator';
 import Pagination from '../../components/common/Pagination';
+import tpcService from '../../services/tpcCourierService';
 import './Orders.css';
 
 const Orders = () => {
@@ -29,6 +30,9 @@ const Orders = () => {
   const [viewingOrder, setViewingOrder] = useState(null);
   const [viewingCancellation, setViewingCancellation] = useState(null);
   const [viewingRefund, setViewingRefund] = useState(null);
+  const [trackingData, setTrackingData] = useState(null);
+  const [trackingLoading, setTrackingLoading] = useState(false);
+  const [trackingError, setTrackingError] = useState(null);
   const { currentUser } = useAuth();
   const location = useLocation();
 
@@ -276,6 +280,21 @@ const Orders = () => {
     }
   };
 
+  const handleTrackOrder = async (podNo) => {
+    setTrackingLoading(true);
+    setTrackingError(null);
+    setTrackingData(null);
+    try {
+      const result = await tpcService.trackOrder(podNo);
+      setTrackingData(result);
+    } catch (error) {
+      console.error("Error tracking order:", error);
+      setTrackingError(error.message);
+    } finally {
+      setTrackingLoading(false);
+    }
+  };
+
   const handleApproveCancellation = async (orderId) => {
     if (!window.confirm('Are you sure you want to APPROVE this cancellation?')) return;
     
@@ -418,6 +437,7 @@ const Orders = () => {
       displayId.includes(searchWithoutHash) ||
       order.id.toLowerCase().includes(searchLower) ||
       (order.orderSerial && String(order.orderSerial).includes(searchWithoutHash)) ||
+      (order.consignment_no && order.consignment_no.toLowerCase().includes(searchLower)) ||
       (order.customerName || '').toLowerCase().includes(searchLower) ||
       (order.email || '').toLowerCase().includes(searchLower) ||
       (order.phone || order.phoneNumber || order.shippingAddress?.phone || '').includes(searchTerm) ||
@@ -1229,6 +1249,44 @@ const Orders = () => {
                       )}
                     </div>
                   </div>
+                  
+                  {(viewingOrder.consignment_no || viewingOrder.tracking_id) && (
+                    <div className="detail-card">
+                      <h3><FiTruck /> Tracking Info</h3>
+                      <div className="payment-info-box">
+                        <div className="info-row">
+                          <label>POD No</label>
+                          <span className="payment-id-text">{viewingOrder.consignment_no || viewingOrder.tracking_id}</span>
+                        </div>
+                        <button 
+                          className="btn-secondary" 
+                          onClick={() => handleTrackOrder(viewingOrder.consignment_no || viewingOrder.tracking_id)}
+                          disabled={trackingLoading}
+                          style={{ width: '100%', marginTop: '10px' }}
+                        >
+                          {trackingLoading ? 'Tracking...' : 'Track Location'}
+                        </button>
+                        {trackingError && <p style={{ color: 'red', fontSize: '12px', marginTop: '5px' }}>{trackingError}</p>}
+                        {trackingData && (
+                          <div style={{ marginTop: '10px', fontSize: '12px' }}>
+                            {Array.isArray(trackingData) ? (
+                              <ul style={{ listStyle: 'none', padding: 0 }}>
+                                {trackingData.map((step, idx) => (
+                                  <li key={idx} style={{ marginBottom: '5px', paddingBottom: '5px', borderBottom: '1px solid #eee' }}>
+                                    <div style={{ fontWeight: 'bold' }}>{step.STATUS || step.status}</div>
+                                    <div style={{ color: '#666' }}>{step.LOCATION || step.location}</div>
+                                    <div style={{ color: '#999', fontSize: '10px' }}>{step.DATE || step.date}</div>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <pre style={{ overflowX: 'auto' }}>{JSON.stringify(trackingData, null, 2)}</pre>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

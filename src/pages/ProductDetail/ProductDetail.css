@@ -86,7 +86,7 @@
     flex: 1;
     height: 500px;
     background-color: #f9fafb;
-    border-radius: 8px;
+    border-radius: 16px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -101,6 +101,7 @@
     height: 100%;
     display: block;
     object-fit: cover;
+    border-radius: 16px;
     transition: transform 0.3s, opacity 0.25s ease;
     pointer-events: none;
 }

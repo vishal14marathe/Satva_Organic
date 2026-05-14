@@ -44,10 +44,10 @@ const Checkout = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState('');
   
-  // Check if COD is available for all items in cart
-  const isCodAvailable = cartItems.every(item => item.codAvailable !== false);
+  // Check if COD is available for all items in cart (Forced to true by user request)
+  const isCodAvailable = true;
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(isCodAvailable ? 'cod' : 'razorpay');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('cod');
   const [isProcessing, setIsProcessing] = useState(false);
   const isInitiatingRef = React.useRef(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);

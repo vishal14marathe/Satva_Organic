@@ -133,8 +133,9 @@ const OrderDetails = () => {
   }, [id, navigate]);
 
   useEffect(() => {
-    if (order && order.courierName === 'TPC' && order.trackingNumber) {
-      fetchTrackingInfo(order.trackingNumber);
+    const podNo = order?.trackingNumber || order?.consignment_no;
+    if (order && order.courierName === 'TPC' && podNo) {
+      fetchTrackingInfo(podNo);
     }
   }, [order]);
 
@@ -419,8 +420,7 @@ const OrderDetails = () => {
                 </div>
               )}
 
-              {/* TPC Real-time Tracking Info */}
-              {order.courierName === 'TPC' && order.trackingNumber && (
+              {order.courierName === 'TPC' && (order.trackingNumber || order.consignment_no) && (
                 <div className="tpc-tracking-section">
                   <h4 className="tracking-subtitle"><FiActivity /> Real-time Tracking (TPC)</h4>
                   {trackingLoading ? (
@@ -429,7 +429,7 @@ const OrderDetails = () => {
                     <div className="tracking-info-grid">
                       <div className="tracking-item">
                         <span className="label">POD Number:</span>
-                        <span className="value">{order.trackingNumber}</span>
+                        <span className="value">{order.trackingNumber || order.consignment_no}</span>
                       </div>
                       <div className="tracking-item">
                         <span className="label">Latest Status:</span>
@@ -727,6 +727,37 @@ const OrderDetails = () => {
                 </div>
               </div>
             </div>
+
+            {order.courierName === 'TPC' && (order.trackingNumber || order.consignment_no) && (
+              <>
+                <div className="card-divider"></div>
+                <div className="inner-status-section">
+                  <div className="status-header-row">
+                    <div className="box-icon-wrapper">
+                      <BsTruck className="main-box-icon" />
+                    </div>
+                    <div className="status-text-info">
+                      <h4 className="status-main-title">Tracking Info (TPC)</h4>
+                      <p className="delivery-subtitle">POD No: {order.trackingNumber || order.consignment_no}</p>
+                    </div>
+                  </div>
+                  <div style={{ padding: '10px 0', fontSize: '14px' }}>
+                    {trackingLoading ? (
+                      <p><FiClock className="spinner" /> Fetching status...</p>
+                    ) : trackingData ? (
+                      <div>
+                        <p><strong>Status:</strong> {trackingData.STATUS || trackingData.status || 'Processed'}</p>
+                        {trackingData.LATEST_LOCATION && (
+                          <p><strong>Location:</strong> {trackingData.LATEST_LOCATION}</p>
+                        )}
+                      </div>
+                    ) : (
+                      <p>Tracking info unavailable</p>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
             <div className="card-divider"></div>
 
             {/* Cancellation Section */}

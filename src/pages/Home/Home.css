@@ -1,4 +1,4 @@
-﻿/* ========================================
+/* ========================================
    HOME PAGE - MODERN MOBILE-FIRST DESIGN
    ======================================== */
 
@@ -908,22 +908,24 @@
     }
 
     .feature-card-modern {
-        padding: 12px;
-        gap: 10px;
+        padding: 8px;
+        gap: 6px;
+        height: 60px;
     }
 
     .feature-icon-modern {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
     }
 
     .feature-title-modern {
-        font-size: 13px;
+        font-size: 12px;
+        margin-bottom: 0;
     }
 
     .feature-desc-modern {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .cat-nav-btn,

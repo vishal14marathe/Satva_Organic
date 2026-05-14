@@ -183,5 +183,6 @@
 
     .premium-cart-action {
         padding: 10px 14px;
+        width: calc(100% - 60px) !important;
     }
 }

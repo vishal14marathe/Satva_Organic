@@ -13,22 +13,22 @@
     --shadow-premium: 0 12px 40px rgba(31, 45, 38, 0.12);
     --shadow-hover: 0 20px 50px rgba(31, 45, 38, 0.18);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --border-radius-lg: 24px;
-    --border-radius-md: 16px;
+    --border-radius-lg: 32px;
+    --border-radius-md: 20px;
 }
 
 .product-card {
-    background: #ffffff;
-    border-radius: var(--border-radius-lg);
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
     overflow: hidden;
-    transition: var(--transition-smooth);
-    border: 1px solid #e2e8f0;
-    width: 100%;
-    max-width: 300px;
     display: flex;
     flex-direction: column;
-    position: relative;
-    cursor: pointer;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .product-card:hover {
@@ -42,18 +42,19 @@
     position: relative;
     width: 100%;
     height: 240px;
-    background: #f8fafc;
+    background: #ffffff;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 8px;
 }
 
 .product-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 12px;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -896,17 +897,49 @@
 }
 
 @media (max-width: 480px) {
+    .product-card {
+        height: auto;
+    }
+
+    .product-card-compact {
+        height: auto;
+    }
+
     .product-card-image {
         height: 140px;
     }
 
+    .flash-badge-overlay {
+        font-size: 9px;
+        padding: 3px 8px;
+        top: 12px;
+        left: 12px;
+        gap: 6px;
+    }
+
     .product-card-info {
-        padding: 10px;
+        padding: 6px;
+        gap: 1px;
     }
 
     .product-name {
         font-size: 13px;
-        min-height: 36px;
+        min-height: auto;
+        margin-bottom: 0;
+    }
+
+    .product-price-container {
+        margin: 0;
+    }
+
+    .price-main-row {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .discount-pill {
+        font-size: 11px;
+        padding: 2px 6px;
     }
 
     .current-price {
