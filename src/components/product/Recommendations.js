@@ -111,7 +111,7 @@ const Recommendations = ({
       </div>
       <div className="recommendations-grid">
         {products.map(product => (
-          <ProductCard key={product.id} product={product} compact={true} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </section>

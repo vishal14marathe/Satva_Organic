@@ -1,6 +1,6 @@
 /* Shop Page Styles */
 .shop-page {
-    padding: var(--spacing-8) 0;
+    padding: 4px 0;
     background: var(--bg-primary);
     min-height: 100vh;
 }
@@ -131,7 +131,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--spacing-4);
+    margin-bottom: 8px;
+    margin-top: 12px;
 }
 
 .results-count {
@@ -143,6 +144,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-top: 12px;
 }
 
 .mobile-filter-toggle {
@@ -318,9 +320,9 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 540px) {
     .products-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
     }
 }

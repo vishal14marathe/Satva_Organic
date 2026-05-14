@@ -897,13 +897,7 @@
 }
 
 @media (max-width: 480px) {
-    .product-card {
-        height: auto;
-    }
 
-    .product-card-compact {
-        height: auto;
-    }
 
     .product-card-image {
         height: 140px;

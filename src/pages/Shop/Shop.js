@@ -203,7 +203,9 @@ const Shop = () => {
 
   return (
     <div className="shop-page">
-      <Breadcrumbs>
+      <Breadcrumbs />
+
+      <div className="container">
         <div className="shop-filters-container shop-top-filters">
           <button 
             className={`mobile-filter-toggle ${mobileFiltersOpen ? 'active' : ''}`}
@@ -300,9 +302,7 @@ const Shop = () => {
             </div>
           </div>
         </div>
-      </Breadcrumbs>
 
-      <div className="container">
         <div className="shop-layout-full">
 
           <div className="shop-results-header">

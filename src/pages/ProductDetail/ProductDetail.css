@@ -84,7 +84,7 @@
 
 .main-image {
     flex: 1;
-    height: 500px;
+    height: 400px;
     background-color: #f9fafb;
     border-radius: 16px;
     overflow: hidden;
@@ -100,7 +100,7 @@
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 16px;
     transition: transform 0.3s, opacity 0.25s ease;
     pointer-events: none;
@@ -1427,10 +1427,9 @@
     .btn-add-to-cart,
     .btn-buy-now {
         height: 48px;
-        font-size: 13px;
-        padding: 0 8px;
+        font-size: 11px;
+        padding: 0 4px;
         min-width: 0;
-        white-space: nowrap;
         flex: 1;
     }
 
@@ -1752,25 +1751,37 @@
         gap: 0;
     }
 
+    .unit-price-label {
+        display: block;
+        margin-left: 0;
+        margin-top: 4px;
+        font-size: 14px;
+    }
+
     .fixed-bottom-footer {
         display: flex;
-        padding: 10px 12px;
-        gap: 8px;
+        padding: 6px 12px;
+        gap: 6px;
     }
 
     .fixed-bottom-footer .btn-add-to-cart,
     .fixed-bottom-footer .btn-buy-now {
         min-width: unset;
         flex: 2;
-        font-size: 12px;
-        height: 44px;
+        font-size: 11px;
+        height: 38px;
+        text-transform: uppercase;
+        font-weight: 600;
     }
 
     .fixed-bottom-footer .wishlist-btn {
         flex: 1;
-        max-width: 44px;
-        height: 44px;
-        font-size: 18px;
+        max-width: 38px;
+        height: 38px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 
